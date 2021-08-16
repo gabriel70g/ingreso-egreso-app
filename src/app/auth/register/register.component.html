@@ -66,9 +66,18 @@
               <button
                 type="submit"
                 class="btn btn-primary submit-btn btn-block"
-
+                  *ngIf="!cargando"
               >
                 Crear cuenta
+              </button>
+               <button
+                class="btn btn-primary submit-btn btn-block"
+                type="button"
+                [disabled]='true'
+                *ngIf="cargando"
+              >
+              <i class="fa fa-spin fa-sync"></i>
+                Espere...
               </button>
             </div>
             <div class="text-block text-center my-3">
