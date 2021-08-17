@@ -3,38 +3,76 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Agregar Ingreso / Egreso</h4>
-        <p class="card-description">
-          Especifique el monto y el tipo
-        </p>
+        <p class="card-description">Especifique el monto y el tipo</p>
 
-        <form>
-
+        <form [formGroup]="ingresoEgresoForm" (ngSubmit)="guardar()">
           <div class="form-group">
             <label>Descripción</label>
-            <input type="text" class="form-control" placeholder="Descripción" name="descripcion">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Descripción"
+              name="description"
+              formControlName="description"
+              [disabled]="cargando"
+            />
           </div>
 
           <div class="form-group">
             <label>Monto</label>
-            <input type="number" class="form-control" placeholder="Monto" name="monto">
-            <p>
-              Debe de ser un monto positivo
-            </p>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Monto"
+              name="monto"
+              formControlName="monto"
+              [disabled]="cargando"
+            />
+            <p>Debe de ser un monto positivo</p>
           </div>
 
           <div class="form-group">
             <label>Tipo</label>
-            <br>
-            <button type="button" class="btn btn-primary btn-block">Ingreso</button>
-            <!-- <button type="button" class="btn btn-warning btn-block">Egreso</button> -->
+            <br />
+            <button
+              type="button"
+              class="btn btn-primary btn-block"
+              (click)="tipo = 'egreso'"
+              *ngIf="tipo==='ingreso'"
+              [disabled]="cargando"
+            >
+              Ingreso
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning btn-block"
+              (click)="tipo = 'ingreso'"
+              *ngIf="tipo==='egreso'"
+              [disabled]="cargando"
+            >
+              Egreso
+            </button>
           </div>
 
-          <hr>
-          <button type="button" class="btn btn-success mr-2">
+          <hr />
+          <button
+            type="submit"
+            class="btn btn-success mr-2"
+            [disabled]="ingresoEgresoForm.invalid"
+            *ngIf="!cargando"
+          >
             <i class="fa fa-save"></i>
             Agregar
           </button>
-
+               <button
+                class="btn btn-primary submit-btn btn-block"
+                type="button"
+                [disabled]='true'
+                *ngIf="cargando"
+              >
+              <i class="fa fa-spin fa-sync"></i>
+                Espere por favor...
+              </button>
           <!--
                 <button disabled class="btn btn-success mr-2">
                   <i class="fa fa-spin fa-sync"></i>
@@ -43,9 +81,8 @@
               -->
 
           <button type="reset" class="btn btn-light">Cancelar</button>
-
         </form>
-        </div>
-        </div>
-        </div>
-        </div>
+      </div>
+    </div>
+  </div>
+</div>

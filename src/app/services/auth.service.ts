@@ -21,14 +21,16 @@ interface userFirebaseModel {
   providedIn: 'root',
 })
 export class AuthService {
-
   userSuscription: Subscription;
+  private _usuarioID: string | null = null;
 
+  get userID() {
+    return this._usuarioID;
+  }
   constructor(
     public auth: AngularFireAuth,
     private firestore: AngularFirestore,
     private store: Store<AppState>
-
   ) {
     this.userSuscription = new Subscription();
   }
@@ -36,6 +38,7 @@ export class AuthService {
   initAuthListener() {
     this.auth.authState.subscribe((fuser) => {
       if (fuser) {
+        this._usuarioID = fuser.uid;
         this.userSuscription = this.firestore
           .doc(`${fuser.uid}/usuario`)
           .valueChanges()
@@ -47,6 +50,7 @@ export class AuthService {
             this.store.dispatch(authActions.setUser({ user }));
           });
       } else {
+        this._usuarioID = null;
         this.userSuscription.unsubscribe();
         this.store.dispatch(authActions.unSetUser());
       }
