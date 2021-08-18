@@ -13,12 +13,16 @@ export class IngresoEgresoService {
   ) {}
 
   crearIngresoEgreso(ingresoEgreso: IngresoEgreso) {
-    const uid = this.authService.userID;
+    const uidUser = this.authService.userID;
+
+    // se quita el campo (uid) para que no
+    // explote por los aires al querer agregar
+    const { uid, ...ingEgre } = ingresoEgreso;
 
     return this.firestore
-      .doc(`${uid}/ingreso-egreso`)
+      .doc(`${uidUser}/ingreso-egreso`)
       .collection('items')
-      .add({ ...ingresoEgreso });
+      .add({ ...ingEgre });
   }
   initIngresosEgresosListener(uid: string) {
     return this.firestore
@@ -34,5 +38,13 @@ export class IngresoEgresoService {
           });
         })
       );
+  }
+  borrarIngresoEgresoItem(uidItem: string) {
+    const uidUser = this.authService.userID;
+
+    return this.firestore.doc(
+      `${uidUser}/ingreso-egreso/items/${uidItem}`
+    ).delete();
+
   }
 }
