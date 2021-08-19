@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import { AppState } from 'src/app/app.reducers';
 import { IngresoEgreso } from 'src/app/models/ingreso-egreso.model';
+import { AppStateWhitIngreso } from '../ingreso-egreso.reducers';
 
 @Component({
   selector: 'app-estadistica',
@@ -30,7 +31,7 @@ export class EstadisticaComponent implements OnInit {
   // ];
   // public doughnutChartType: ChartType = 'doughnut';
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppStateWhitIngreso>) {
     this.store
       .select('ingresoEgreso')
       .subscribe(({ items }) => this.generarEstadistica(items));
@@ -40,7 +41,7 @@ export class EstadisticaComponent implements OnInit {
 
   generarEstadistica(items: IngresoEgreso[]) {
 
-      this.ingresos = 0;
+
       this.egresos = 0;
       this.totalIngresos = 0;
       this.totalEgresos = 0;

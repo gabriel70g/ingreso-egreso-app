@@ -4,9 +4,9 @@ import Swal from 'sweetalert2';
 import { IngresoEgreso } from '../models/ingreso-egreso.model';
 import { IngresoEgresoService } from '../services/ingreso-egreso.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.reducers';
 import * as ui from '../shared/ui.actions';
 import { Subscription } from 'rxjs';
+import { AppStateWhitIngreso } from './ingreso-egreso.reducers';
 
 @Component({
   selector: 'app-ingreso-egreso',
@@ -22,7 +22,7 @@ export class IngresoEgresoComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private ingresoEgresoService: IngresoEgresoService,
-    private store: Store<AppState>
+    private store: Store<AppStateWhitIngreso>
   ) {
     this.ingresoEgresoForm = this.fb.group({
       description: ['', [Validators.required]],
